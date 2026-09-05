@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Projects - Webaura by III</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-dark: #090a0f;
+      --card-bg: #121520;
+      --card-hover: #1a1e2e;
+      --accent-blue: #0072ff;
+      --accent-purple: #8a2be2;
+      --accent-gradient: linear-gradient(135deg, #0072ff, #8a2be2, #f107a3);
+      --text-main: #ffffff;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Desktop Sidebar */
+    .sidebar {
+      width: 280px;
+      background-color: #0b0d14;
+      border-right: 1px solid var(--border-color);
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      background: var(--accent-gradient);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    .brand-text h2 {
+      font-size: 18px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-text span {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 30px;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+    }
+
+    .nav-links a.active {
+      border-left: 3px solid var(--accent-blue);
+    }
+
+    /* Mobile Header */
+    .mobile-header {
+      display: none;
+      background: #0b0d14;
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .menu-toggle {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* Main Content */
+    .main-content {
+      margin-left: 280px;
+      flex: 1;
+      padding: 40px 60px;
+      width: calc(100% - 280px);
+    }
+
+    /* Page Header */
+    .page-header {
+      margin-bottom: 50px;
+    }
+
+    .page-header h1 {
+      font-size: 36px;
+      margin-top: 6px;
+    }
+
+    /* Section Styling */
+    .section-title {
+      font-size: 12px;
+      color: var(--accent-purple);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .section-heading {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    /* Grid Layouts */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 20px;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: var(--card-hover);
+    }
+
+    .portfolio-img-wrapper {
+      display: block;
+      width: 100%;
+      height: 180px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .portfolio-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .portfolio-img-wrapper:hover img {
+      transform: scale(1.05);
+    }
+
+    .badge {
+      font-size: 11px;
+      color: var(--accent-blue);
+      background: rgba(0, 114, 255, 0.1);
+      padding: 4px 10px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+
+    .badge.concept {
+      color: var(--accent-purple);
+      background: rgba(138, 43, 226, 0.1);
+    }
+
+    .card h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 1200px) {
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 1024px) {
+      body { flex-direction: column; }
+      .mobile-header { display: flex; }
+      .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 10px 0 20px rgba(0,0,0,0.5);
+      }
+      .sidebar.active { transform: translateX(0); }
+      .main-content {
+        margin-left: 0;
+        width: 100%;
+        padding: 30px 20px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .grid-3 { grid-template-columns: 1fr; }
+      .page-header h1 { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Mobile Top Header -->
+  <header class="mobile-header">
+    <div class="brand" style="margin-bottom: 0;">
+      <div class="brand-logo">W</div>
+      <div class="brand-text">
+        <h2>WEBAURA</h2>
+      </div>
+    </div>
+    <button class="menu-toggle" id="menuToggle"><i class="fa-solid fa-bars"></i></button>
+  </header>
+
+  <!-- Navigation Drawer -->
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-logo">W</div>
+      <div class="brand-text">
+        <h2>WEBAURA</h2>
+        <span>by III</span>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li><a href="webaura.html"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="webaura.html#services"><i class="fa-solid fa-layer-group"></i> Services</a></li>
+      <li><a href="projects.html" class="active"><i class="fa-solid fa-briefcase"></i> Portfolio</a></li>
+      <li><a href="webaura.html#reviews"><i class="fa-solid fa-star"></i> Reviews</a></li>
+      <li><a href="webaura.html#contact"><i class="fa-solid fa-envelope"></i> Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="page-header">
+      <div class="section-title">PORTFOLIO</div>
+      <h1>Our Showcase</h1>
+    </header>
+
+    <!-- Client Projects Section -->
+    <section id="client-projects">
+      <div class="section-title">REAL WORLD DELIVERIES</div>
+      <h2 class="section-heading">Client Projects</h2>
+
+      <div class="grid-3">
+        <!-- Muslimah Glamour -->
+        <div class="card">
+          <a href="https://muslimah-glamour.vercel.app" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="Images/Muslimah Glamour.jpg" alt="Muslimah Glamour">
+          </a>
+          <span class="badge">Client Project</span>
+          <h3>Muslimah Glamour</h3>
+          <p>Handcrafted anti-tarnish jewellery, premium hijabs, and curated gift sets platform.</p>
+        </div>
+
+        <!-- Luxury Floral -->
+        <div class="card">
+          <a href="https://luxuryfloral.vercel.app" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="Images/Luxury Floral.jpg" alt="Luxury Floral">
+          </a>
+          <span class="badge">Client Project</span>
+          <h3>Luxury Floral</h3>
+          <p>Handmade, fully customizable premium gift packaging and floral arrangements site.</p>
+        </div>
+
+        <!-- Riii Jewels by Areesha -->
+        <div class="card">
+          <a href="https://riiijewelsbyareesha.netlify.app/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="Images/Riii Jewels.jpg" alt="Riii Jewels by Areesha">
+          </a>
+          <span class="badge">Client Project</span>
+          <h3>Riii Jewels by Areesha</h3>
+          <p>Hand-picked, premium anti-tarnish jewelry collection e-commerce store.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Concept Projects Section -->
+    <section id="concept-projects">
+      <div class="section-title">DESIGN EXPLORATIONS</div>
+      <h2 class="section-heading">Concept Projects</h2>
+
+      <div class="grid-3">
+        <div class="card">
+          <a href="https://webaura-iii.github.io/Neha-Makeup-Artist/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="Images/Neha Makeup Artist.jpg" alt="Neha Makeup Artist">
+          </a>
+          <span class="badge concept">Concept Project</span>
+          <h3>Neha Makeup Artist</h3>
+          <p>Elegant portfolio layout for bridal, party, and HD glam look bookings.</p>
+        </div>
+
+        <div class="card">
+          <a href="https://webaura-iii.github.io/Hijab-by-Shifan/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="/Images/Hijab By Shifan.jpg" alt="E-Commerce UX">
+          </a>
+          <span class="badge concept">Concept Project</span>
+          <h3>Hijab by Shifan</h3>
+          <p>Modern e-commerce platform for premium hijabs, hampers, and bouquets.</p>
+        </div>
+
+        <div class="card">
+          <a href="https://webaura-iii.github.io/Linayarts/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="/Images/Linayart.jpg" alt="AI Studio Workspace">
+          </a>
+          <span class="badge concept">Concept Project</span>
+          <h3>Linayarts</h3>
+          <p>Immersive gallery showcase for multi-layered resin fine art creations.</p>
+        </div>
+
+        <div class="card">
+          <a href="https://webaura-iii.github.io/symphony-in-henna/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="/Images/Symphony In Henna.jpg" alt="AI Studio Workspace">
+          </a>
+          <span class="badge concept">Concept Project</span>
+          <h3>Symphony in Henna</h3>
+          <p>Bespoke artisan mehendi booking platform highlighting organic designs.</p>
+        </div>
+
+        <div class="card">
+          <a href="https://webaura-iii.github.io/Kanak-Bakes/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="/Images/Kanak Bakes.jpg" alt="AI Studio Workspace">
+          </a>
+          <span class="badge concept">Concept Project</span>
+          <h3>Kanak Bakes</h3>
+          <p>Artisan bakery storefront showcasing custom cakes and freshly baked confections.</p>
+        </div>
+
+        <div class="card">
+          <a href="https://webaura-iii.github.io/MadCro/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="/Images/Stitch Love.jpg" alt="AI Studio Workspace">
+          </a>
+          <span class="badge concept">Concept Project</span>
+          <h3>Stitch Love</h3>
+          <p>Handcrafted crochet store platform designed with warm, pastel aesthetics.</p>
+        </div>
+
+        <div class="card">
+          <a href="https://webaura-iii.github.io/Lumina-Atelier/" target="_blank" rel="noopener noreferrer" class="portfolio-img-wrapper">
+            <img src="/Images/Lumina Atelier.jpg" alt="AI Studio Workspace">
+          </a>
+          <span class="badge concept">Concept Project</span>
+          <h3>Lumina Atelier</h3>
+          <p>Bespoke artisanal candles and custom scent experience storefront.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Sidebar Drawer Toggle for Mobile
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!sidebar.contains(e.target) && !menuToggle.contains(e.target) && sidebar.classList.contains('active')) {
+        sidebar.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
