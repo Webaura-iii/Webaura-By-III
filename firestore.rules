@@ -1,0 +1,32 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Public website visitors may submit inquiries, but cannot read, edit or delete them.
+    // Keep inquiry creation restricted to the expected fields and basic input limits.
+    match /inquiries/{inquiryId} {
+      allow read, update, delete: if false;
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'name', 'brandName', 'email', 'phone', 'service', 'budget',
+          'contactMethod', 'details', 'createdAt', 'status', 'source'
+        ]) &&
+        request.resource.data.name is string &&
+        request.resource.data.name.size() > 0 &&
+        request.resource.data.name.size() <= 100 &&
+        request.resource.data.email is string &&
+        request.resource.data.email.size() <= 254 &&
+        request.resource.data.service is string &&
+        request.resource.data.details is string &&
+        request.resource.data.details.size() <= 3000 &&
+        request.resource.data.source == 'website' &&
+        request.resource.data.status == 'new' &&
+        request.resource.data.createdAt == request.time;
+    }
+
+    // No public writes to portfolio or other content. Add authenticated admin rules
+    // only after defining and enforcing the project's trusted admin role.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
