@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Allow OpenAI's search crawler so eligible public pages can be discovered in ChatGPT Search.
+User-agent: OAI-SearchBot
+Allow: /
+
+# Add a Sitemap directive after the final custom domain is chosen and the sitemap is published.
