@@ -5,4 +5,4 @@ Allow: /
 User-agent: OAI-SearchBot
 Allow: /
 
-# Add a Sitemap directive after the final custom domain is chosen and the sitemap is published.
+Sitemap: https://webaurabyiii.vercel.app/sitemap.xml
